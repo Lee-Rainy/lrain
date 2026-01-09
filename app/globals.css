@@ -1,26 +1,142 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-paper: #FFFDF8;
+    --text: #1f2937;
+    --muted: #6b7280;
   }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-paper: #0b0b0b;
+      --text: #e6e6e6;
+      --muted: #9ca3af;
+    }
+  }
+
+  /* Responsive base font size for better readability on small screens */
+  html {
+    font-size: clamp(14px, 1.6vw, 16px);
+  }
+
+  html, body, #__next {
+    height: 100%;
+  }
+
+  body {
+    background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.6) 0, transparent 20%), var(--bg-paper);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Simple text utilities using CSS variables */
+  .text-muted { color: var(--muted); }
+  .text-foreground { color: var(--text); }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Hand-drawn card style */
+.scribble-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,250,245,0.9));
+  border-radius: 14px;
+  border: 2px solid rgba(0,0,0,0.06);
+  box-shadow: 6px 8px 0 rgba(0,0,0,0.04);
+  padding: 1.25rem;
+}
+
+/* A small hand-drawn accent line */
+.hand-accent {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='20'><path d='M0 10 C40 0 60 20 120 10 C180 0 200 10 240 10' stroke='%23FF8A80' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.95'/></svg>");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 20px;
+}
+
+/* Small scribble decorative */
+.scribble-deco {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20'><path d='M4 12 C20 2 40 18 60 8 C80 -2 100 12 116 6' stroke='%23F2D8C6' stroke-width='2' fill='none' stroke-linecap='round'/></svg>");
+  width: 120px;
+  height: 22px;
+  background-repeat: no-repeat;
+}
+
+/* Animated hand-drawn accent (used as inline SVG) */
+.hand-accent-svg {
+  display: block;
+  width: 100%;
+  height: 36px;
+}
+
+.hand-accent-svg .path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: draw 900ms ease-out forwards 200ms;
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Hover / focus effects for cards */
+.scribble-card {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.scribble-card:hover, .scribble-card:focus-within {
+  transform: translateY(-6px) rotate(-0.4deg);
+  box-shadow: 10px 10px 0 rgba(0,0,0,0.06);
+}
+
+/* Dark mode adjustments */
+:root {
+  --scribble-bg: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,250,245,0.9));
+}
+
+html.dark :root {
+  --scribble-bg: linear-gradient(180deg, rgba(20,20,20,0.64), rgba(16,16,16,0.8));
+}
+
+.scribble-card {
+  background: var(--scribble-bg);
+}
+
+/* Skip link (accessibility) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  background: var(--bg-paper);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  z-index: 60;
+}
+
+/* Focus-visible for keyboard users */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 3px solid rgba(255,138,128,0.18);
+  outline-offset: 3px;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hand-accent-svg .path { animation: none; stroke-dashoffset: 0; }
+  .scribble-card { transition: none; transform: none !important; }
 }
