@@ -33,7 +33,7 @@ export default function Home() {
               </div>
               <div className="text-center sm:text-left space-y-2">
                 <h1 className="text-4xl sm:text-5xl font-handwritten font-bold text-foreground leading-tight">
-                  你好，我是 Lrain
+                  你好，我是 lrain
                 </h1>
                 <p className="text-base text-muted font-medium">
                   前端爱好者 · 喜欢手绘风与微交互
