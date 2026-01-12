@@ -28,3 +28,4 @@ jobs:
 
             # 4. (可选) 清理不再使用的旧镜像，释放服务器磁盘
             docker image prune -f
+ 
