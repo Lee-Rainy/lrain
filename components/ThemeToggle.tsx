@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark" | null>(null);
 
   useEffect(() => {
-    const stored = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
+    const stored = localStorage.getItem("theme");
     if (stored === "dark") {
       document.documentElement.classList.add("dark");
       setTheme("dark");
@@ -14,11 +14,12 @@ export default function ThemeToggle() {
       document.documentElement.classList.remove("dark");
       setTheme("light");
     } else {
-      // follow system preference
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (prefersDark) {
         document.documentElement.classList.add("dark");
         setTheme("dark");
+      } else {
+        setTheme("light");
       }
     }
   }, []);
@@ -35,14 +36,30 @@ export default function ThemeToggle() {
     }
   }
 
+  // Prevent hydration mismatch by not rendering until mounted
+  if (theme === null) return <div className="w-10 h-10" />; 
+
   return (
     <button
-      aria-label="切换主题"
-      title="切换主题"
-      className="rounded-full border border-black/8 px-3 py-1 text-sm hover:bg-black/3 dark:border-white/10 dark:hover:bg-white/6 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
+      aria-label="Toggle Theme"
+      title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
       onClick={toggle}
+      className={`
+        relative w-10 h-10 rounded-full flex items-center justify-center
+        transition-all duration-300 ease-in-out
+        bg-white dark:bg-zinc-800 
+        border-2 border-gray-200 dark:border-gray-700
+        hover:border-primary dark:hover:border-primary
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
+        shadow-sm hover:shadow-md
+      `}
     >
-      {theme === "dark" ? "🌙 暗色" : "🌤️ 亮色"}
+      <span className={`absolute transform transition-transform duration-500 ${theme === 'dark' ? 'rotate-0 opacity-100' : 'rotate-90 opacity-0'}`}>
+        🌙
+      </span>
+      <span className={`absolute transform transition-transform duration-500 ${theme === 'light' ? 'rotate-0 opacity-100' : '-rotate-90 opacity-0'}`}>
+        ☀️
+      </span>
     </button>
   );
 }

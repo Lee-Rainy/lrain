@@ -7,22 +7,30 @@
     --bg-paper: #FFFDF8;
     --text: #1f2937;
     --muted: #6b7280;
+    
+    --card-bg: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,250,245,0.9));
+    --card-border: rgba(0,0,0,0.06);
+    --card-shadow: 6px 8px 0 rgba(0,0,0,0.04);
+    --card-shadow-hover: 10px 10px 0 rgba(0,0,0,0.06);
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg-paper: #0b0b0b;
-      --text: #e6e6e6;
-      --muted: #9ca3af;
-    }
+  .dark {
+    --bg-paper: #0b0b0b;
+    --text: #e6e6e6;
+    --muted: #9ca3af;
+
+    --card-bg: linear-gradient(180deg, rgba(25,25,25,0.8), rgba(20,20,20,0.9));
+    --card-border: rgba(255,255,255,0.08);
+    --card-shadow: 6px 8px 0 rgba(0,0,0,0.3);
+    --card-shadow-hover: 10px 10px 0 rgba(0,0,0,0.5);
   }
 
-  /* Responsive base font size for better readability on small screens */
+  /* Responsive base font size */
   html {
     font-size: clamp(14px, 1.6vw, 16px);
   }
 
-  html, body, #__next {
+  html, body {
     height: 100%;
   }
 
@@ -31,39 +39,38 @@
     color: var(--text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .dark body {
+    background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.03) 0, transparent 20%), var(--bg-paper);
   }
 
-  /* Simple text utilities using CSS variables */
   .text-muted { color: var(--muted); }
   .text-foreground { color: var(--text); }
 }
 
 /* Hand-drawn card style */
 .scribble-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,250,245,0.9));
+  background: var(--card-bg);
   border-radius: 14px;
-  border: 2px solid rgba(0,0,0,0.06);
-  box-shadow: 6px 8px 0 rgba(0,0,0,0.04);
-  padding: 1.25rem;
+  border: 2px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
 }
 
-/* A small hand-drawn accent line */
-.hand-accent {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='20'><path d='M0 10 C40 0 60 20 120 10 C180 0 200 10 240 10' stroke='%23FF8A80' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.95'/></svg>");
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: 20px;
+.scribble-card:hover, .scribble-card:focus-within {
+  transform: translateY(-4px) rotate(-0.5deg);
+  box-shadow: var(--card-shadow-hover);
+  border-color: rgba(0,0,0,0.1);
 }
 
-/* Small scribble decorative */
-.scribble-deco {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20'><path d='M4 12 C20 2 40 18 60 8 C80 -2 100 12 116 6' stroke='%23F2D8C6' stroke-width='2' fill='none' stroke-linecap='round'/></svg>");
-  width: 120px;
-  height: 22px;
-  background-repeat: no-repeat;
+.dark .scribble-card:hover, .dark .scribble-card:focus-within {
+  border-color: rgba(255,255,255,0.15);
 }
 
-/* Animated hand-drawn accent (used as inline SVG) */
+/* Decorative elements */
 .hand-accent-svg {
   display: block;
   width: 100%;
@@ -75,36 +82,14 @@
   stroke-dashoffset: 1000;
   stroke-linecap: round;
   stroke-linejoin: round;
-  animation: draw 900ms ease-out forwards 200ms;
+  animation: draw 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.2s;
 }
 
 @keyframes draw {
   to { stroke-dashoffset: 0; }
 }
 
-/* Hover / focus effects for cards */
-.scribble-card {
-  transition: transform 180ms ease, box-shadow 180ms ease;
-}
-.scribble-card:hover, .scribble-card:focus-within {
-  transform: translateY(-6px) rotate(-0.4deg);
-  box-shadow: 10px 10px 0 rgba(0,0,0,0.06);
-}
-
-/* Dark mode adjustments */
-:root {
-  --scribble-bg: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,250,245,0.9));
-}
-
-html.dark :root {
-  --scribble-bg: linear-gradient(180deg, rgba(20,20,20,0.64), rgba(16,16,16,0.8));
-}
-
-.scribble-card {
-  background: var(--scribble-bg);
-}
-
-/* Skip link (accessibility) */
+/* Accessibility */
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -124,18 +109,18 @@ html.dark :root {
   border-radius: 6px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.12);
   z-index: 60;
+  border: 2px solid var(--text);
 }
 
-/* Focus-visible for keyboard users */
 :focus {
   outline: none;
 }
 :focus-visible {
-  outline: 3px solid rgba(255,138,128,0.18);
+  outline: 3px solid rgba(255,138,128,0.5);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .hand-accent-svg .path { animation: none; stroke-dashoffset: 0; }
   .scribble-card { transition: none; transform: none !important; }
