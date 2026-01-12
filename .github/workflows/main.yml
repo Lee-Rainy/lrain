@@ -1,0 +1,30 @@
+name: Remote Deploy CI
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # 这里写你需要在服务器上执行的命令
+          script: |
+            cd /root/front/lrain
+            git pull origin master
+            # 3. 使用 Docker Compose 重新构建并启动
+            # --build 会强制重新构建镜像，-d 会在后台运行
+            docker-compose up --build -d
+
+            # 4. (可选) 清理不再使用的旧镜像，释放服务器磁盘
+            docker image prune -f
