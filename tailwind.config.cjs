@@ -16,8 +16,8 @@ module.exports = {
         scribble: '#F2D8C6',
       },
       fontFamily: {
-        handwritten: ['"Patrick Hand"', 'ui-sans-serif', 'system-ui'],
-        sans: ['"Noto Sans SC"', 'ui-sans-serif', 'system-ui'],
+        handwritten: ['var(--font-handwritten)', 'ui-sans-serif', 'system-ui'],
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui'],
       },
       boxShadow: {
         'hand': '6px 6px 0 rgba(0,0,0,0.06), -3px -3px 0 rgba(255,255,255,0.6)'

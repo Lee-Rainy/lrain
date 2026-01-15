@@ -11,9 +11,21 @@
     "commit": "pnpm exec git-cz"
   },
   "dependencies": {
+    "lucide": "^0.562.0",
+    "lucide-react": "^0.562.0",
     "next": "16.1.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "lexical": "^0.16.1",
+    "@lexical/react": "^0.16.1",
+    "@lexical/rich-text": "^0.16.1",
+    "@lexical/list": "^0.16.1",
+    "@lexical/code": "^0.16.1",
+    "@lexical/link": "^0.16.1",
+    "@lexical/history": "^0.16.1",
+    "@lexical/markdown": "^0.16.1",
+    "@lexical/html": "^0.16.1",
+    "@lexical/selection": "^0.16.1"
   },
   "config": {
     "commitizen": {
