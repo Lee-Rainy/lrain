@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#FF8A80', // coral
+        primary: 'var(--primary-color)',
         accent: '#FFF6E5',
         mint: '#B8F0DA',
         paper: '#FFFDF8',

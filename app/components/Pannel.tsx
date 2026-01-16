@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import MusicPlayer from "@/components/MusicPlayer";
 import Link from "next/link";
 
 export default function Pannel() {
@@ -87,6 +88,8 @@ export default function Pannel() {
           ))}
         </div>
       </Card>
+
+      {/* <MusicPlayer /> */}
     </aside>
   );
 }

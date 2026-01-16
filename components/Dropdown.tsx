@@ -44,25 +44,29 @@ export function Dropdown({ trigger, children }: DropdownProps) {
       </button>
 
       {/* Dropdown panel */}
-      {open && (
+      <div
+        className={`
+            absolute left-0 top-full pt-2 min-w-[160px] z-50
+            transition-all duration-200 ease-out
+      ${
+        open
+          ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 scale-95 -translate-y-1 pointer-events-none"
+      }
+          `}
+      >
         <div
           className="
-            absolute left-0 top-full pt-2 min-w-[160px] z-50
-          "
-        >
-          <div
-            className="
               rounded-xl p-1
               bg-[var(--dropdown-bg)]
               border border-[var(--dropdown-border)]
               shadow-[var(--dropdown-shadow)]
               backdrop-blur-[16px]
             "
-          >
-            {children}
-          </div>
+        >
+          {children}
         </div>
-      )}
+      </div>
     </div>
   );
 }

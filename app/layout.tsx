@@ -3,6 +3,7 @@ import { Patrick_Hand, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import MusicPlayer from "@/components/MusicPlayer";
 
 const patrickHand = Patrick_Hand({
   weight: "400",
@@ -41,9 +42,11 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           跳到主要内容
         </a>
-        <NavBar />
-        {children}
-        <Footer />
+        <div className="min-h-screen ">
+          <NavBar />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );

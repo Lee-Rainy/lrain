@@ -8,3 +8,11 @@ export async function fileExists(filePath: string) {
     return false;
   }
 }
+
+export function slugify(title: string) {
+  return title
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9\-一-龥]/g, "");
+}

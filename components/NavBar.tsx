@@ -17,7 +17,7 @@ export default function NavBar() {
           <DropdownItem href="/blog" prefix="📝">
             Blog
           </DropdownItem>
-          <DropdownItem href="/editor" prefix="🎨">
+          <DropdownItem href="/editor?id=secret-demo-key" prefix="🎨">
             Editor
           </DropdownItem>
         </Dropdown>

@@ -11,21 +11,25 @@
     "commit": "pnpm exec git-cz"
   },
   "dependencies": {
+    "@lexical/code": "^0.16.1",
+    "@lexical/history": "^0.16.1",
+    "@lexical/html": "^0.16.1",
+    "@lexical/link": "^0.16.1",
+    "@lexical/list": "^0.16.1",
+    "@lexical/markdown": "^0.16.1",
+    "@lexical/react": "^0.16.1",
+    "@lexical/rich-text": "^0.16.1",
+    "@lexical/selection": "^0.16.1",
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "dotenv": "^17.2.3",
+    "lexical": "^0.16.1",
     "lucide": "^0.562.0",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
+    "pg": "^8.17.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "lexical": "^0.16.1",
-    "@lexical/react": "^0.16.1",
-    "@lexical/rich-text": "^0.16.1",
-    "@lexical/list": "^0.16.1",
-    "@lexical/code": "^0.16.1",
-    "@lexical/link": "^0.16.1",
-    "@lexical/history": "^0.16.1",
-    "@lexical/markdown": "^0.16.1",
-    "@lexical/html": "^0.16.1",
-    "@lexical/selection": "^0.16.1"
+    "react-dom": "19.2.3"
   },
   "config": {
     "commitizen": {
@@ -36,6 +40,7 @@
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@types/node": "^20",
+    "@types/pg": "^8.16.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10",
@@ -45,6 +50,7 @@
     "eslint-config-next": "16.1.1",
     "husky": "^9.1.7",
     "postcss": "^8.5.6",
+    "prisma": "^7.2.0",
     "tailwindcss": "^3",
     "typescript": "^5"
   }

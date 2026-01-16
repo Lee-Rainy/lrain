@@ -20,12 +20,18 @@ export async function request<T>(
 ): Promise<ApiResponse<T>> {
   const { params, headers, body, timeout = 10000, raw, ...rest } = options;
 
-  const baseURL = isServer
-    ? process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-    : "";
+  const env = typeof process !== "undefined" ? process.env : undefined;
+  const defaultBase =
+    env?.NEXT_PUBLIC_BASE_URL ||
+    (env?.VERCEL_URL ? `https://${env.VERCEL_URL}` : "http://localhost:3000");
+  const baseURL = isServer ? defaultBase : "";
 
   const query = buildQuery(params);
-  const fullUrl = query ? `${baseURL}${url}?${query}` : `${baseURL}${url}`;
+  const rawUrl = query ? `${url}${url.includes("?") ? "&" : "?"}${query}` : url;
+  const fullUrl =
+    rawUrl.startsWith("http") || rawUrl.startsWith("//")
+      ? rawUrl
+      : new URL(rawUrl, isServer ? baseURL : window.location.origin).toString();
 
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
@@ -48,14 +54,16 @@ export async function request<T>(
     });
 
     if (raw) return res as any;
-
     const data = await res.json().catch(() => null);
-
     if (!res.ok) {
       throw new FetchError(data?.message || res.statusText, res.status, data);
     }
 
-    return data;
+    return {
+      code: res.status,
+      data,
+      message: data?.message || res.statusText,
+    };
   } catch (err: any) {
     if (err.name === "AbortError") {
       throw new FetchError("请求超时", 408);
